@@ -14,8 +14,8 @@ export const useBookmarks = defineStore('bookmarks', () => {
     bookmarks.value.push(bookmark)
   }
 
-  function setBookmarks(bookmarks) {
-    bookmarks.value = bookmarks
+  function setBookmarks(_bookmarks) {
+    bookmarks.value = _bookmarks
   }
 
   function setEditedBookmark(bookmark) {

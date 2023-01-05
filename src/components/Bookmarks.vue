@@ -23,7 +23,7 @@ async function getBookmarks() {
       router.push('/login')
     } else {
       const data = await response.json()
-      bookmarks.bookmarks = data
+      bookmarks.setBookmarks(data)
     }
   } catch (err) {
     globalError.setMessage(err)
