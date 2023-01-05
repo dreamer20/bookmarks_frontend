@@ -70,8 +70,8 @@ onBeforeMount(getBookmarks)
             <img 
               class="icon"
               :src="bookmark.icon_url" 
-              onerror="this.onerror=null;this.src='https://via.placeholder.com/24';"
-              alt="">
+              onerror="this.onerror=null;this.src='/favicon.ico';"
+              alt="Bookmark icon">
         </va-list-item-section>
         <va-list-item-section>
           <span class="bookmark-title">
