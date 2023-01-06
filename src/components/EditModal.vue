@@ -13,6 +13,8 @@
   const isFetching = ref(false)
   const editForm = ref(null)
   const errorMessage = ref('')
+  const urlInput = ref(null)
+  const tagsInput = ref(null)
 
   function closeModal() {
     modals.setIsEditModalOpen(false)
@@ -64,16 +66,21 @@
             <va-input
               label="Title"
               v-model="bookmarks.editedBookmark.title"
-              class="mb-4 form-control"/>
+              class="mb-4 form-control"
+              @keydown.enter="urlInput.focus()" />
           </div>
           <va-input
             label="URL"
             v-model="bookmarks.editedBookmark.url"
-            class="mb-4 form-control"/>
+            class="mb-4 form-control"
+            ref="urlInput"
+            @keydown.enter="tagsInput.focus()" />
           <va-input
             class="mb-4 form-control"
             label="Tags"
-            v-model="bookmarks.editedBookmark.tags"/>
+            v-model="bookmarks.editedBookmark.tags"
+            ref="tagsInput"
+            @keydown.enter="saveBookmark" />
           <p style="color: #d7234e;">{{ errorMessage }}</p>
           <div class="submit-wrapper">
             <va-button

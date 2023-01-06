@@ -13,6 +13,7 @@
   const globalError = useGlobalError()
   const auth = useAuth()
   const router = useRouter()
+  const passwordInput = ref(null)
 
   async function login() {
     errorMessage.value = null
@@ -52,18 +53,21 @@
           <va-input
             class="mb-4 form-control"
             label="Username"
-            v-model="username"/>
+            v-model="username"
+            @keydown.enter="passwordInput.focus()"/>
           <va-input
             class="mb-4 form-control"
             label="Password"
             v-model="password"
-            :type="isPasswordVisible ? 'text': 'password'">
+            :type="isPasswordVisible ? 'text': 'password'"
+            ref="passwordInput"
+            @keydown.enter="login">
             <template #appendInner>
               <va-icon
               :name="isPasswordVisible ? 'visibility_off' : 'visibility'"
               size="small"
               color="--va-primary"
-              @click="isPasswordVisible = !isPasswordVisible" />
+              @click="isPasswordVisible = !isPasswordVisible"/>
             </template>
           </va-input>
             <p style="color: #d7234e;">{{ errorMessage }}</p>

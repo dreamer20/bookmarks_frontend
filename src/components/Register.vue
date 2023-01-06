@@ -11,6 +11,8 @@
   const isFetching = ref(false)
   const errorMessage = ref(null) 
   const isRegisterSuccess = ref(false)
+  const passwordInput = ref(null)
+  const password2Input = ref(null)
 
   const username_validator = [
     (v) => v.match(/^[a-z][a-z0-9]{3,}$/gi) || 'Must be more then 3 symbols and contain only latin letters and numbers'
@@ -68,13 +70,16 @@
             class="mb-4 form-control"
             label="Username"
             :rules="username_validator"
-            v-model="username"/>
+            v-model="username"
+            @keydown.enter="passwordInput.focus()" />
           <va-input
             class="mb-4 form-control"
             label="Password"
             :rules="password_validator"
             :type="isPasswordVisible ? 'text': 'password'"
-            v-model="password">
+            v-model="password"
+            ref="passwordInput"
+            @keydown.enter="password2Input.focus()">
             <template #appendInner>
               <va-icon
               :name="isPasswordVisible ? 'visibility_off' : 'visibility'"
@@ -88,7 +93,9 @@
             label="Repeat password"
             :rules="password2_validator"
             :type="isPasswordVisible ? 'text': 'password'"
-            v-model="password2">
+            v-model="password2"
+            ref="password2Input"
+            @keydown.enter="register">
               <template #appendInner>
                 <va-icon
                   :name="isPasswordVisible ? 'visibility_off' : 'visibility'"

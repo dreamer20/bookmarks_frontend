@@ -14,6 +14,7 @@
   const tags = ref('')
   const addForm = ref(null)
   const isFetching = ref(false)
+  const tagsInput = ref(null)
 
   const inputValidation = [
     (v) => v.match(/^https?:\/\//gi) || 'Link must start with http(s)://'
@@ -66,12 +67,15 @@
             label="URL"
             :rules="inputValidation"
             v-model="url"
-            class="mb-4 form-control"/>
+            class="mb-4 form-control"
+            @keydown.enter="tagsInput.focus()" />
           <va-input
             label="Tags (optional)"
             v-model="tags"
             placeholder="Tags separated by comma"
-            class="mb-4 form-control"/>
+            class="mb-4 form-control"
+            ref="tagsInput"
+            @keydown.enter="add" />
           <div class="submit-wrapper">
             <va-button
               preset="primary"
