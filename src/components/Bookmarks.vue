@@ -79,6 +79,18 @@ onBeforeMount(getBookmarks)
               {{ bookmark.title }}
             </a>
           </span>
+          <va-list-item-label>
+            <span
+              class="tag"
+              v-if="bookmark.tags"
+              v-for="tag in bookmark.tags.split(',')">
+              <span
+                class="tag-inner" 
+                @click="bookmarks.setSearchString(`#${tag}`)">
+                #{{ tag }}
+              </span>
+            </span>
+          </va-list-item-label>
         </va-list-item-section>
         <va-list-item-section icon>
           <va-icon
@@ -131,5 +143,17 @@ onBeforeMount(getBookmarks)
   .bookmark-title {
     font-weight: 700;
     font-size: large;
+  }
+
+  .tag {
+    color: #5f4807;
+    text-decoration: underline #5f4807;
+    padding: 0 5px;
+  }
+  
+  .tag-inner:hover {
+    color: #a93511;
+    text-decoration: underline #a93511;
+    cursor: pointer;
   }
 </style>

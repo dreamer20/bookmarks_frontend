@@ -41,8 +41,14 @@
       } else {
         const updated_bookmark = await response.json()
         const bookmarkIndex = bookmarks.bookmarks.findIndex((bookmark) => bookmark.id === updated_bookmark.id)
-
+        
         bookmarks.bookmarks[bookmarkIndex] = updated_bookmark
+        
+        // function updateBookmark(updated_bookmark) {
+        //   const bookmarkIndex = bookmarks.bookmarks.findIndex((bookmark) => bookmark.id === updated_bookmark.id)
+        //   updated_bookmark.
+        //   bookmarks.bookmarks[bookmarkIndex] = updated_bookmark
+        // }
         closeModal()
       }
     } catch (err) {
@@ -72,6 +78,10 @@
             label="URL"
             v-model="bookmarks.editedBookmark.url"
             class="mb-4 form-control"/>
+          <va-input
+            class="mb-4 form-control"
+            label="Tags"
+            v-model="bookmarks.editedBookmark.tags"/>
           <p style="color: #d7234e;">{{ errorMessage }}</p>
           <div class="submit-wrapper">
             <va-button
@@ -93,7 +103,7 @@
 <style scoped>
 
   .form-control {
-    width: 300px;
+    width: 100%;
   }
   .submit-wrapper {
     display: flex;

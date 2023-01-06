@@ -11,6 +11,7 @@
   const globalError = useGlobalError()
   const bookmarks = useBookmarks()
   const url = ref('')
+  const tags = ref('')
   const addForm = ref(null)
   const isFetching = ref(false)
 
@@ -26,9 +27,14 @@
   async function add() {
     if (!addForm.value.validate()) return
 
+    const bookmark = {
+      url: url.value,
+      tags: tags.value
+    }
+
     try {
       isFetching.value = true
-      const response = await api.addBookmark(url.value, auth.token)
+      const response = await api.addBookmark(bookmark, auth.token)
 
       if (!response.ok) {
         const data = await response.json()
@@ -61,6 +67,11 @@
             :rules="inputValidation"
             v-model="url"
             class="mb-4 form-control"/>
+          <va-input
+            label="Tags (optional)"
+            v-model="tags"
+            placeholder="Tags separated by comma"
+            class="mb-4 form-control"/>
           <div class="submit-wrapper">
             <va-button
               preset="primary"
@@ -81,7 +92,7 @@
 <style scoped>
 
   .form-control {
-    width: 300px;
+    width: 100%;
   }
   .submit-wrapper {
     display: flex;

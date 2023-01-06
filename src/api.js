@@ -24,17 +24,15 @@ export const api = {
             { body: JSON.stringify(params), method: 'POST', headers: headers }
         )
     },
-    async addBookmark(url, token) {
-        const params = {
-            url: url
-        }
+    async addBookmark(bookmark, token) {
+
         const headers = {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
         return await fetch(
             `${rootUrl}/bookmarks/add`,
-            { body: JSON.stringify(params), method: 'POST', headers: headers }
+            { body: JSON.stringify(bookmark), method: 'POST', headers: headers }
         )
     },
     async getBookmarks(token) {

@@ -7,7 +7,19 @@ export const useBookmarks = defineStore('bookmarks', () => {
   const deletedBookmarks = ref(new Set())
   const searchString = ref('')
   const filteredBookmarks = computed(() => {
-    return bookmarks.value.filter((bookmark) => bookmark.title.toLowerCase().indexOf(searchString.value) !== -1)
+    if (searchString.value[0] === '#') {
+      return bookmarks.value.filter(
+        (bookmark) => {
+          if (bookmark.tags) {
+            return bookmark.tags.indexOf(searchString.value.slice(1)) !== -1
+          }
+        }
+      )
+    } else {
+      return bookmarks.value.filter(
+        (bookmark) => bookmark.title.toLowerCase().indexOf(searchString.value) !== -1
+      )
+    }
   })
 
   function addBookmark(bookmark) {
@@ -30,6 +42,10 @@ export const useBookmarks = defineStore('bookmarks', () => {
     deletedBookmarks.value.delete(id)
   }
 
+  function setSearchString(value) {
+    searchString.value = value
+  }
+
   return {
     bookmarks,
     editedBookmark,
@@ -40,6 +56,7 @@ export const useBookmarks = defineStore('bookmarks', () => {
     setBookmarks,
     setEditedBookmark,
     addDeletedBookmark,
-    removeDeletedBookmark
+    removeDeletedBookmark,
+    setSearchString
   }
 })

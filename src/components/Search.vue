@@ -8,7 +8,7 @@
   <va-form class="search-form">
     <va-input
       class="search-input mb-4"
-      placeholder="Search bookmark"
+      placeholder="Search bookmark (by tags: #tagname)"
       v-model="bookmarks.searchString"/>
   </va-form>
 </template>
