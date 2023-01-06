@@ -40,15 +40,7 @@
         errorMessage.value = data.detail
       } else {
         const updated_bookmark = await response.json()
-        const bookmarkIndex = bookmarks.bookmarks.findIndex((bookmark) => bookmark.id === updated_bookmark.id)
-        
-        bookmarks.bookmarks[bookmarkIndex] = updated_bookmark
-        
-        // function updateBookmark(updated_bookmark) {
-        //   const bookmarkIndex = bookmarks.bookmarks.findIndex((bookmark) => bookmark.id === updated_bookmark.id)
-        //   updated_bookmark.
-        //   bookmarks.bookmarks[bookmarkIndex] = updated_bookmark
-        // }
+        bookmarks.updateBookmark(updated_bookmark)
         closeModal()
       }
     } catch (err) {

@@ -42,6 +42,11 @@ export const useBookmarks = defineStore('bookmarks', () => {
     deletedBookmarks.value.delete(id)
   }
 
+  function updateBookmark(updated_bookmark) {
+    const bookmarkIndex = bookmarks.value.findIndex((bookmark) => bookmark.id === updated_bookmark.id)
+    bookmarks.value[bookmarkIndex] = updated_bookmark
+  }
+
   function setSearchString(value) {
     searchString.value = value
   }
@@ -57,6 +62,7 @@ export const useBookmarks = defineStore('bookmarks', () => {
     setEditedBookmark,
     addDeletedBookmark,
     removeDeletedBookmark,
+    updateBookmark,
     setSearchString
   }
 })
