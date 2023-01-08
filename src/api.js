@@ -1,4 +1,4 @@
-const rootUrl = 'http://localhost:8000'
+const rootUrl = 'https://bookmarks-nlvn.onrender.com'
 
 export const api = {
     async getToken(username, password) {
