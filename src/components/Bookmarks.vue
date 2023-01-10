@@ -1,5 +1,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
+import ListView from './ListView.vue';
+import ThumbnailsView from './ThumbnailsView.vue'
 import { api } from '../api';
 import { useBookmarks } from '../stores/bookmarks'
 import { useGlobalError } from '../stores/globalError'
@@ -11,6 +13,11 @@ const globalError = useGlobalError()
 const modals = useModals()
 const auth = useAuth()
 const isFetching = ref(false)
+const view = ref('thumbnail')
+const options = [
+  {value: 'list', icon: 'format_list_bulleted'},
+  {value: 'thumbnail', icon: 'grid_view'}
+]
 
 async function getBookmarks() {
   try {
@@ -60,65 +67,46 @@ onBeforeMount(getBookmarks)
 </script>
 
 <template>
-    <va-list class="list-wrapper">
-      <va-list-label>
-        Bookmarks
-      </va-list-label>
-      <va-list-item v-for="bookmark in bookmarks.filteredBookmarks"
-      class="list__item">
-        <va-list-item-section class="icon-wrapper">
-            <img 
-              class="icon"
-              :src="bookmark.icon_url" 
-              onerror="this.onerror=null;this.src='/favicon.ico';"
-              alt="Bookmark icon">
-        </va-list-item-section>
-        <va-list-item-section>
-          <span class="bookmark-title">
-            <a :href="bookmark.url" class="va-link" target="_blank">
-              {{ bookmark.title }}
-            </a>
-          </span>
-          <va-list-item-label>
-            <span
-              class="tag"
-              v-if="bookmark.tags"
-              v-for="tag in bookmark.tags.split(',')">
-              <span
-                class="tag-inner" 
-                @click="bookmarks.setSearchString(`#${tag}`)">
-                #{{ tag }}
-              </span>
-            </span>
-          </va-list-item-label>
-        </va-list-item-section>
-        <va-list-item-section icon>
-          <va-icon
-            name="edit_square"
-            class="edit"
-            @click="editBookmark(bookmark)"/>
-        </va-list-item-section>
-        <va-list-item-section icon>
-          <va-icon 
-            v-if="isFetching && bookmarks.deletedBookmarks.has(bookmark.id)"
-            name="sync"
-            class="delete"
-            spin />
-          <va-icon
-            v-else
-            name="delete"
-            class="delete"
-            @click="deleteBookmark(bookmark.id)"/>
-        </va-list-item-section>
-      </va-list-item>
-    </va-list>
+  <div class="toggle-wrapper">
+    <va-button-toggle
+      v-model="view"
+      :options="options"
+      preset="secondary"
+      border-color="primary"
+      size="small" />
+  </div>
+  <div class="title-wrapper">
+    <div class="va-title">bookmarks</div>
+  </div>
+  <ThumbnailsView
+    v-if="view === 'thumbnail' ? true : false"
+    :bookmarks="bookmarks.filteredBookmarks"
+    :edit-bookmark="editBookmark"
+    :delete-bookmark="deleteBookmark"
+    :set-search-string="bookmarks.setSearchString"
+    :is-fetching="isFetching"
+    :deleted-bookmarks="bookmarks.deletedBookmarks" />
+  <ListView v-else
+    :bookmarks="bookmarks.filteredBookmarks"
+    :edit-bookmark="editBookmark"
+    :delete-bookmark="deleteBookmark"
+    :set-search-string="bookmarks.setSearchString"
+    :is-fetching="isFetching"
+    :deleted-bookmarks="bookmarks.deletedBookmarks" />
 </template>
 
 
 <style scoped>
-  .centered {
+
+.toggle-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+  .title-wrapper {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
+    color:rgb(169, 169, 169);
   }
 
   .edit {

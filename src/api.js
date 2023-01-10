@@ -1,4 +1,5 @@
-const rootUrl = 'https://bookmarks-nlvn.onrender.com'
+// const rootUrl = 'https://bookmarks-nlvn.onrender.com'
+const rootUrl = 'http://127.0.0.1:8000'
 
 export const api = {
     async getToken(username, password) {
