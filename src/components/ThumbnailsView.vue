@@ -39,7 +39,7 @@ const props = defineProps([
                   </div>
                   <div class="dropdown-item">
                     <span class="dropdown-item-text"
-                      @click="props.deleteBookmark">
+                      @click="props.deleteBookmark(bookmark.id)">
                       Delete
                     </span>
                     <va-icon
