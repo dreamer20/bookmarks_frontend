@@ -8,9 +8,13 @@ export const useGlobalError = defineStore('globalError', () => {
     message.value = value
   }
 
-  function removeMessage(value) {
+  function removeMessage() {
     message.value = null
   }
 
-  return { message, setMessage, removeMessage }
+  function reset() {
+    message.value = null
+  }
+
+  return { message, setMessage, removeMessage, reset }
 })

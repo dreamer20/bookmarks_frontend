@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, markRaw } from 'vue'
 import { createPinia } from 'pinia'
 import { createVuestic } from 'vuestic-ui'
 
@@ -9,8 +9,11 @@ import 'vuestic-ui/css'
 import './assets/main.css'
 
 const app = createApp(App)
-
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(({ store }) => {
+    store.router = markRaw(router)
+})
+app.use(pinia)
 app.use(createVuestic())
 app.use(router)
 

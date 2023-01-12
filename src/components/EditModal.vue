@@ -38,14 +38,19 @@
       const response = await api.updateBookmark(auth.token, bookmarks.editedBookmark)
 
       if (!response.ok) {
-        const data = await response.json()
-        errorMessage.value = data.detail
+        if (response.status === 401) {
+          auth.logout(true)
+        } else {
+          const data = await response.json()
+          errorMessage.value = data.detail
+        }
       } else {
         const updated_bookmark = await response.json()
         bookmarks.updateBookmark(updated_bookmark)
         closeModal()
       }
     } catch (err) {
+      console.log(err)
       globalError.setMessage(err)
     } finally {
       isFetching.value = false

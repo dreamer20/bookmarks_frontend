@@ -32,7 +32,7 @@
         auth.setToken(token)
         auth.setIsAuthenticated(true)
         localStorage.setItem('token', token)
-
+        auth.setIsSessionExpired(false)
         router.push('/')
       }
       
@@ -49,6 +49,16 @@
     <va-card>
       <va-card-title>Login</va-card-title>
       <va-card-content>
+        <va-alert
+          dense
+          color="warning"
+          class="mb-4"
+          v-model="auth.isSessionExpired">
+          <template #icon>
+            <va-icon name="warning" />
+          </template> 
+          Your session is expired.
+        </va-alert>
         <va-form class="login-form">
           <va-input
             class="mb-4 form-control"

@@ -22,6 +22,7 @@
 
   function closeModal() {
     url.value = ''
+    tags.value = ''
     modals.setIsAddModalOpen(false)
   }
 
@@ -38,8 +39,12 @@
       const response = await api.addBookmark(bookmark, auth.token)
 
       if (!response.ok) {
-        const data = await response.json()
-        globalError.setMessage(data.detail)
+        if (response.status == 401) {
+          auth.logout(true)
+        } else {
+          const data = await response.json()
+          globalError.setMessage(data.detail)
+        }
       } else {
         const bookmark = await response.json()
         url.value = ''
@@ -47,6 +52,7 @@
         modals.setIsAddModalOpen(false)
       }
     } catch (err) {
+      console.log(err)
       globalError.setMessage(err)
     } finally {
       isFetching.value = false

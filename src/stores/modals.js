@@ -12,10 +12,17 @@ export const useModals = defineStore('modals', () => {
   function setIsEditModalOpen(value) {
     isEditModalOpen.value = value
   }
+
+  function reset() {
+    isAddModalOpen.value = false
+    isEditModalOpen.value = false
+  }
+
   return { 
     isAddModalOpen,
     isEditModalOpen,
     setIsAddModalOpen,
-    setIsEditModalOpen
+    setIsEditModalOpen,
+    reset
   }
 })

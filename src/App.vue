@@ -24,12 +24,7 @@
     }
   })
 
-  function logout() {
-    localStorage.removeItem('token')
-    auth.removeToken()
-    auth.setIsAuthenticated(false)
-    router.push('/login')
-  }
+
 </script>
 
 <template>
@@ -50,7 +45,7 @@
                 </va-navbar-item>
               </template>
               <template #right v-if="auth.isAuthenticated">
-                <va-navbar-item><a href="#" class="va-link" @click.prevent="logout">Logout</a></va-navbar-item>
+                <va-navbar-item><a href="#" class="va-link" @click.prevent="auth.logout(false)">Logout</a></va-navbar-item>
               </template>
               <template #right v-else>
                 <va-navbar-item><router-link to="/login" class="va-link">Login</router-link></va-navbar-item>

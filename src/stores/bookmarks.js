@@ -51,6 +51,13 @@ export const useBookmarks = defineStore('bookmarks', () => {
     searchString.value = value
   }
 
+  function reset() {
+    bookmarks.value = []
+    editedBookmark.value = null
+    deletedBookmarks.value = new Set()
+    searchString.value = ''
+  }
+
   return {
     bookmarks,
     editedBookmark,
@@ -63,6 +70,7 @@ export const useBookmarks = defineStore('bookmarks', () => {
     addDeletedBookmark,
     removeDeletedBookmark,
     updateBookmark,
-    setSearchString
+    setSearchString,
+    reset
   }
 })

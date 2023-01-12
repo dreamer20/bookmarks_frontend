@@ -24,10 +24,7 @@ async function getBookmarks() {
     const response = await api.getBookmarks(auth.token)
 
     if (!response.ok) {
-      localStorage.removeItem('token')
-      auth.removeToken()
-      auth.setIsAuthenticated(false)
-      router.push('/login')
+      auth.logout(true)
     } else {
       const data = await response.json()
       bookmarks.setBookmarks(data)
@@ -49,13 +46,18 @@ async function deleteBookmark(id) {
     const response = await api.deleteBookmark(auth.token, id)
 
     if (!response.ok) {
-      const data = await response.json()
-      globalError.setMessage(data.detail)
+      if (response.status === 401) {
+        auth.logout(true)
+      } else {
+        const data = await response.json()
+        globalError.setMessage(data.detail)
+      }
     } else {
       bookmarks.removeDeletedBookmark(id)
       bookmarks.bookmarks = bookmarks.bookmarks.filter((bookmark) => bookmark.id !== id)
     }
   } catch (err) {
+    console.log(err)
     globalError.setMessage(err)
   } finally {
     isFetching.value = false
