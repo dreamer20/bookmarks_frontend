@@ -26,5 +26,5 @@ jobs:
       - run: cp index.html 404.html
       - run: git status
       - run: git add .
-      - run: git commit -m "Update application"
+      - run: git commit -m "Update application" || echo "Nothing to commit"
       - run: git push origin dist
