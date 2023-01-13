@@ -1,0 +1,30 @@
+name: Build and push to dist
+run-name: Build and push
+on:
+  push:
+    branches:
+      - main
+    
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run build
+      - run: cp -r dist ..
+      - uses: actions/checkout@v3
+        with:
+          ref: dist
+      - run: ls
+      - run: git config --global user.name 'dreamer20'
+      - run: git config --global user.email 'gv4alex@gmail.com'
+      - run: cp -r ../dist/* .
+      - run: cp index.html 404.html
+      - run: git status
+      - run: git add .
+      - run: git commit -m "Update application"
+      - run: git push origin dist
