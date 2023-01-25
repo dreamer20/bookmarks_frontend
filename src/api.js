@@ -32,7 +32,7 @@ export const api = {
             'Authorization': `Bearer ${token}`
         }
         return await fetch(
-            `${rootUrl}/bookmarks/add`,
+            `${rootUrl}/bookmarks`,
             { body: JSON.stringify(bookmark), method: 'POST', headers: headers }
         )
     },
